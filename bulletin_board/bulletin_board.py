@@ -31,7 +31,7 @@ def respond_request(dest_id, message, token, url):
     print(url)
     app_response = {
     'mode':'app',
-    'system_name':app_name,
+    'app_name':app_name,
     'auth_token':str(token),
     'data':{
         1:{'source_id':app_name,
@@ -58,7 +58,7 @@ def view():
     <title>Bulletin Board</title>
     </head>
     <h1 style="text-align: center;">Bulletin Board</h1>
-    <table style="width: 400px; border-color: black; margin-left: auto; margin-right: auto;" border="3">
+    <table style="width: 600px; border-color: black; margin-left: auto; margin-right: auto;" border="3">
     <tbody>
     <tr>
     <td style="text-align: center;">
@@ -69,6 +69,9 @@ def view():
     </td>
     <td style="text-align: center;">
     <h3>Time</h3>
+    </td>
+    <td style="text-align: center;">
+    <h3>Network/Server</h3>
     </td>
     </tr>
     '''
@@ -87,7 +90,7 @@ def view():
 @app.route('/post', methods=['POST'])
 def api(api_mode=None):
     api_data = request.json
-
+    print(api_data)
     if api_data['mode'] == 'app':
         
         display_list.append('''
@@ -95,6 +98,7 @@ def api(api_mode=None):
             <td>''' + str(api_data['data']['source_id']) + '''</td>
             <td>''' + api_data['data']['message'] + '''</td>
             <td>''' + time.strftime('%H:%M') + '''</td>
+            <td>''' + api_data['server_name']+ '''</td>
             </tr>
                             ''')
         
