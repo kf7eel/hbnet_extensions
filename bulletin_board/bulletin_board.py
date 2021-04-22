@@ -1,5 +1,5 @@
 ###############################################################################
-#   GPS/Data - Copyright (C) 2020 Eric Craw, KF7EEL <kf7eel@qsl.net>
+#   Copyright (C) 2021 Eric Craw, KF7EEL <kf7eel@qsl.net>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -51,6 +51,12 @@ def respond_request(dest_id, message, token, url):
 def view():
     post_string = ''
     header = '''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>Bulletin Board</title>
+    </head>
     <h1 style="text-align: center;">Bulletin Board</h1>
     <table style="width: 400px; border-color: black; margin-left: auto; margin-right: auto;" border="3">
     <tbody>
@@ -69,6 +75,9 @@ def view():
     footer = '''
     </tbody>
     </table>
+    <p>&nbsp;</p>
+    <div style="text-align: center;">Bulletin Board created by KF7EEL - <a href="https://kf7eel.github.io/hblink3/">https://github.com/kf7eel/hblink3</a></div>
+    </html>
     '''
     for i in display_list:
             post_string = post_string + i + '\n'
