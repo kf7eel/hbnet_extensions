@@ -20,4 +20,8 @@
 Setings for the Bulletin Board application.
 '''
 # Name of bulletin board
-app_name = 'My Bulletin Board'
+app_name = 'Multi Network Bulletin Board'
+# Port to run app on
+app_port = 8080
+# Host to run app on
+app_host = '127.0.0.1'

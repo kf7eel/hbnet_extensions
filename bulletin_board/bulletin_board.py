@@ -23,7 +23,7 @@ It is a simple bulletin board application.
 
 from flask import Flask, request, Markup, jsonify, make_response
 import json, requests, time
-from bulletin_board_settings import *
+from config import *
 
 app = Flask(__name__)
 
@@ -114,4 +114,4 @@ def api(api_mode=None):
 if __name__ == '__main__':
     global display_list, app_name
     display_list = []
-    app.run(debug = True, port=8080, host='0.0.0.0')
+    app.run(debug = True, port=app_port, host=app_host)
