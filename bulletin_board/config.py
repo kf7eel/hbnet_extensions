@@ -21,6 +21,8 @@ Setings for the Bulletin Board application.
 '''
 # Name of bulletin board
 app_name = 'Multi Network Bulletin Board'
+#App shortcut
+app_shortcut = 'BBD'
 # Port to run app on
 app_port = 8080
 # Host to run app on

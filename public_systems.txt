@@ -1,0 +1,20 @@
+{
+# Publicly accessible applications
+    'BBD':{
+        # Mode for application, operates differently than msg_xfer
+        'mode':'app',
+        # Name of external application
+        'app_name':'Multi Network Bulletin Board',
+        # Endpoint URL of API
+        'url':'http://hbl.ink/bb/post',
+        # Website for users to get info
+        'website':'http://hbl.ink',
+        },
+# Networks/Servers that allow public message transfer
+    'HBL':{
+        'mode':'msg_xfer',
+        'auth_type':'public',
+        'network_name':'KF7EEL Development Server',
+        'url':'http://hbl.ink/d-aprs/',
+        }
+}

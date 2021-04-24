@@ -33,6 +33,7 @@ def respond_request(dest_id, message, token, url):
     app_response = {
     'mode':'app',
     'app_name':app_name,
+    'app_shortcut':app_shortcut,
     'auth_token':str(token),
     'data':{
         1:{'source_id':app_name,
