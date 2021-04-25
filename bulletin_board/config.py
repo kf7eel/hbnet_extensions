@@ -23,6 +23,8 @@ Setings for the Bulletin Board application.
 app_name = 'Multi Network Bulletin Board'
 #App shortcut
 app_shortcut = 'BBD'
+# Logo
+app_logo = 'https://raw.githubusercontent.com/kf7eel/hblink3/gps/HBlink.png'
 # Port to run app on
 app_port = 8080
 # Host to run app on

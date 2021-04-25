@@ -59,6 +59,7 @@ def view():
     <meta charset="UTF-8">
     <title>''' + app_name + '''</title>
     </head>
+    <p><img style="display: block; margin-left: auto; margin-right: auto;" src="''' + app_logo + '''" alt="Logo" width="300" height="144" /></p>
     <h1 style="text-align: center;">''' + app_name + '''</h1>
     <table style="width: 600px; border-color: black; margin-left: auto; margin-right: auto;" border="3">
     <tbody>
