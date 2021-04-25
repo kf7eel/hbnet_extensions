@@ -103,10 +103,10 @@ def api(api_mode=None):
         
         display_list.append('''
         <tr>
-        <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + str(api_data['data']['source_id']) + '''</td>
+        <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + '<em>' + str(from_callsign) + '</em><br />' + str(api_data['data']['source_id']) + '''</td>
         <td style="text-align: center;"><strong>''' + api_data['data']['message'] + '''</strong></td>
         <td style="text-align: center;">''' + time.strftime('%H:%M - %m/%d/%y') + '''</td>
-        <tdstyle="text-align: center;">''' + api_data['server_name']+ '''</td>
+        <td style="text-align: center;">''' + api_data['server_name']+ '''</td>
         </tr>
                             ''')
         
