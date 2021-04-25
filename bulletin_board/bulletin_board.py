@@ -99,11 +99,12 @@ def api(api_mode=None):
     radio_id_result = radio_id_get.json()
     print(radio_id_result['results'][0]['callsign'])
     from_callsign = radio_id_result['results'][0]['callsign']
+    name = radio_id_result['results'][3]['fname']
     if api_data['mode'] == 'app':
         
         display_list.append('''
         <tr>
-        <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + '<em>' + str(from_callsign) + '</em><br />' + str(api_data['data']['source_id']) + '''</td>
+        <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + '<em>' + str(name) + '</em><br />' + str(api_data['data']['source_id']) + '''</td>
         <td style="text-align: center;"><strong>''' + api_data['data']['message'] + '''</strong></td>
         <td style="text-align: center;">''' + time.strftime('%H:%M - %m/%d/%y') + '''</td>
         <td style="text-align: center;">''' + api_data['server_name']+ '''</td>
