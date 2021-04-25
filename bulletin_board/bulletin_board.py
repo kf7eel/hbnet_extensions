@@ -61,7 +61,7 @@ def view():
     </head>
     <p><img style="display: block; margin-left: auto; margin-right: auto;" src="''' + app_logo + '''" alt="Logo" width="300" height="144" /></p>
     <h1 style="text-align: center;">''' + app_name + '''</h1>
-    <table style="width: 600px; border-color: black; margin-left: auto; margin-right: auto;" border="3">
+    <table style="width: 800px; border-color: black; margin-left: auto; margin-right: auto;" border="3">
     <tbody>
     <tr>
     <td style="text-align: center;">
@@ -104,8 +104,8 @@ def api(api_mode=None):
         display_list.append('''
         <tr>
         <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + str(api_data['data']['source_id']) + '''</td>
-        <td><strong>''' + api_data['data']['message'] + '''</strong></td>
-        <td style="text-align: center;">''' + time.strftime('%H:%M') + '''</td>
+        <td style="text-align: center;><strong>''' + api_data['data']['message'] + '''</strong></td>
+        <td style="text-align: center;">''' + time.strftime('%H:%M - %m/%d/%y') + '''</td>
         <td>''' + api_data['server_name']+ '''</td>
         </tr>
                             ''')
