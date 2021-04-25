@@ -97,12 +97,12 @@ def api(api_mode=None):
     if api_data['mode'] == 'app':
         
         display_list.append('''
-            <tr>
-            <td>''' + str(api_data['data']['source_id']) + '''</td>
-            <td>''' + api_data['data']['message'] + '''</td>
-            <td>''' + time.strftime('%H:%M') + '''</td>
-            <td>''' + api_data['server_name']+ '''</td>
-            </tr>
+        <tr>
+        <td style="text-align: center;">''' + str(api_data['data']['source_id']) + '''</td>
+        <td><strong>''' + api_data['data']['message'] + '''</strong></td>
+        <td style="text-align: center;">''' + time.strftime('%H:%M') + '''</td>
+        <td>''' + api_data['server_name']+ '''</td>
+        </tr>
                             ''')
         
         respond_request(api_data['data']['source_id'], 'Posted: ' + api_data['data']['message'], api_data['auth_token'],api_data['response_url'])
