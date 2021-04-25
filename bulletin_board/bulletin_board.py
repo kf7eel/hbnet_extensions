@@ -99,7 +99,7 @@ def api(api_mode=None):
     radio_id_result = radio_id_get.json()
     print(radio_id_result['results'][0]['callsign'])
     from_callsign = radio_id_result['results'][0]['callsign']
-    name = radio_id_result['results'][3]['fname']
+    name = radio_id_result['results'][0]['fname']
     if api_data['mode'] == 'app':
         
         display_list.append('''
