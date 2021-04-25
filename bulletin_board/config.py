@@ -26,6 +26,6 @@ app_shortcut = 'BBD'
 # Logo
 app_logo = 'https://raw.githubusercontent.com/kf7eel/hblink3/gps/HBlink.png'
 # Port to run app on
-app_port = 8085
+app_port = 8071
 # Host to run app on
 app_host = '127.0.0.1'

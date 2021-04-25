@@ -94,7 +94,7 @@ def view():
 def api(api_mode=None):
     api_data = request.json
     radio_id_get = response = requests.get("https://radioid.net/api/dmr/user/?id=" + str(api_data['data']['source_id']))
-    print(api_data)
+    print(api_data['data']['message'])
     print(radio_id_get.json())
     radio_id_result = radio_id_get.json()
     print(radio_id_result['results'][0]['callsign'])
@@ -104,9 +104,9 @@ def api(api_mode=None):
         display_list.append('''
         <tr>
         <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + str(api_data['data']['source_id']) + '''</td>
-        <td style="text-align: center;><strong>''' + api_data['data']['message'] + '''</strong></td>
+        <td style="text-align: center;"><strong>''' + api_data['data']['message'] + '''</strong></td>
         <td style="text-align: center;">''' + time.strftime('%H:%M - %m/%d/%y') + '''</td>
-        <td>''' + api_data['server_name']+ '''</td>
+        <tdstyle="text-align: center;">''' + api_data['server_name']+ '''</td>
         </tr>
                             ''')
         
