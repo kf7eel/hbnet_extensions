@@ -93,12 +93,17 @@ def view():
 @app.route('/post', methods=['POST'])
 def api(api_mode=None):
     api_data = request.json
+    radio_id_get = response = requests.get("https://radioid.net/api/dmr/user/?id=" + str(api_data['data']['source_id']))
     print(api_data)
+    print(radio_id_get.json())
+    radio_id_result = radio_id_get.json()
+    print(radio_id_result['results'][0]['callsign'])
+    from_callsign = radio_id_result['results'][0]['callsign']
     if api_data['mode'] == 'app':
         
         display_list.append('''
         <tr>
-        <td style="text-align: center;">''' + str(api_data['data']['source_id']) + '''</td>
+        <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + str(api_data['data']['source_id']) + '''</td>
         <td><strong>''' + api_data['data']['message'] + '''</strong></td>
         <td style="text-align: center;">''' + time.strftime('%H:%M') + '''</td>
         <td>''' + api_data['server_name']+ '''</td>
