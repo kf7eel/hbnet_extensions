@@ -4,14 +4,14 @@
         'mode':'app',
         'app_name':'Multi Network Bulletin Board',
         'app_description':'A bulletin board',
-        'url':'http://hbl.ink/bb/post',
-        'website':'http://hbl.ink/bb',
+        'url':'https://hbl.ink/bb/post',
+        'website':'https://hbl.ink/bb',
         },
 # Networks/Servers that allow public message transfer
     'HBL':{
         'mode':'msg_xfer',
         'auth_type':'public',
         'network_name':'KF7EEL Development Server',
-        'url':'http://hbl.ink/d-aprs/',
+        'url':'https://hbl.ink/d-aprs/',
         }
 }
