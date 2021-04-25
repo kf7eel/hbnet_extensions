@@ -1,13 +1,10 @@
 {
 # Publicly accessible applications
     'BBD':{
-        # Mode for application, operates differently than msg_xfer
         'mode':'app',
-        # Name of external application
         'app_name':'Multi Network Bulletin Board',
-        # Endpoint URL of API
+        'app_description':'A bulletin board',
         'url':'http://hbl.ink/bb/post',
-        # Website for users to get info
         'website':'http://hbl.ink',
         },
 # Networks/Servers that allow public message transfer
