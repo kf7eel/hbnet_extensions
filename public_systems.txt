@@ -7,6 +7,13 @@
         'url':'https://hbl.ink/bb/post',
         'website':'https://hbl.ink/bb',
         },
+        'WX':{
+        'mode':'app',
+        'app_name':'HBLink Weather Service',
+        'app_description':'Get the current weather',
+        'url':'https://hbl.ink/wx/weather',
+        'website':'https://hbl.ink/wx',
+        },
 # Networks/Servers that allow public message transfer
     'HBL':{
         'mode':'msg_xfer',

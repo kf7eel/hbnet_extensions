@@ -27,6 +27,31 @@ from config import *
 
 app = Flask(__name__)
 
+class weather:
+    '''Use open weather map for weather data'''
+    def __init__(self):
+        global owm_API_key
+        self.api_url = 'http://api.openweathermap.org/data/2.5/'
+        self.api_current = 'weather?'
+        self.lat = 'lat='
+        self.lon = '&lon='
+        self.city = 'q='
+        self.app_id = '&appid=' + owm_API_key + '&units=imperial'
+        # return temp, pressure, wind, and wind dir
+
+    def current_loc(self, lat, lon):
+        url = self.api_url + self.api_current + self.lat + lat + self.lon + lon + self.app_id
+        wx_data = requests.get(url).json()
+        return wx_data['name'] , wx_data['sys']['country'], wx_data['weather'][0]['main'], wx_data['main']['temp'], wx_data['main']['pressure'], wx_data['wind']['speed'], wx_data['wind']['deg']
+    def city_loc(self, city_name):
+        url = self.api_url + self.api_current + self.city + city_name + self.app_id
+        wx_data = requests.get(url).json()
+        print(url)
+        return wx_data['name'] , wx_data['sys']['country'], wx_data['weather'][0]['main'], wx_data['main']['temp'], wx_data['main']['pressure'], wx_data['wind']['speed'], wx_data['wind']['deg']
+        
+
+
+
 def respond_request(dest_id, message, token, url):
     url = url + '/app'
     print(url)
@@ -67,7 +92,10 @@ def view():
     <h3>From</h3>
     </td>
     <td style="text-align: center;">
-    <h3>Message</h3>
+    <h3>Query</h3>
+    </td>
+    <td style="text-align: center;">
+    <h3>Result</h3>
     </td>
     <td style="text-align: center;">
     <h3>Time</h3>
@@ -81,7 +109,7 @@ def view():
     </tbody>
     </table>
     <p>&nbsp;</p>
-    <div style="text-align: center;">Bulletin Board created by KF7EEL - <a href="https://kf7eel.github.io/hblink3/">https://github.com/kf7eel/hblink3</a></div>
+    <div style="text-align: center;">HBLink Weather created by KF7EEL - <a href="https://kf7eel.github.io/hblink3/">https://github.com/kf7eel/hblink3</a></div>
     </html>
     '''
     for i in display_list:
@@ -89,32 +117,40 @@ def view():
     return header + post_string + footer
     
 
-@app.route('/post', methods=['POST'])
+@app.route('/weather', methods=['POST'])
 def api(api_mode=None):
     api_data = request.json
+    parsed = api_data['data']['message'].split(' ')
     radio_id_get = response = requests.get("https://radioid.net/api/dmr/user/?id=" + str(api_data['data']['source_id']))
-    print(api_data['data']['message'])
-    print(radio_id_get.json())
+    #print(radio_id_get.json())
     radio_id_result = radio_id_get.json()
-    print(radio_id_result['results'][0]['callsign'])
+    #print(radio_id_result['results'][0]['callsign'])
     from_callsign = radio_id_result['results'][0]['callsign']
     name = radio_id_result['results'][0]['fname']
-    if api_data['mode'] == 'app':
+    try:
+        wx = weather().city_loc(api_data['data']['message'])
+        sms_result = wx[0] + ', ' + wx[1] + '. ' + wx[2] + ', Temp: ' + str(wx[3]) + ' Pres: ' + str(wx[4]) + ' Wind Speed: ' + str(wx[5]) + ' Wind Dir: ' + str(wx[6])
+        if api_data['mode'] == 'app':
+            #         <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + '<em>' + str(name) + '</em><br />' + str(api_data['data']['source_id']) + '''</td>
+
+            display_list.append('''
+            <tr>
+            <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + '<em>' + str(name) + '</em><br />' + str(api_data['data']['source_id']) + '''</td>
+            <td style="text-align: center;">''' + api_data['data']['message'] + '''</td>
+            <td style="text-align: center;">''' + sms_result + '''</td>
+            <td style="text-align: center;">''' + time.strftime('%H:%M \n %m/%d/%y') + '''</td>
+            <td style="text-align: center;">''' + api_data['server_name']+ '''</td>
+            </tr>
+
+                                ''')
+    except:
+        sms_result = 'Error with query'
         
-        display_list.append('''
-        <tr>
-        <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + '<em>' + str(name) + '</em><br />' + str(api_data['data']['source_id']) + '''</td>
-        <td style="text-align: center;"><strong>''' + api_data['data']['message'] + '''</strong></td>
-        <td style="text-align: center;">''' + time.strftime('%H:%M - %m/%d/%y') + '''</td>
-        <td style="text-align: center;">''' + api_data['server_name']+ '''</td>
-        </tr>
-                            ''')
-        
-        respond_request(api_data['data']['source_id'], 'Posted: ' + api_data['data']['message'], api_data['auth_token'],api_data['response_url'])
-        return jsonify(
-                            mode=api_data['mode'],
-                            status='Response Sent',
-                        )
+    respond_request(api_data['data']['source_id'], sms_result, api_data['auth_token'],api_data['response_url'])
+    return jsonify(
+                        mode=api_data['mode'],
+                        status='Response Sent',
+                    )
 
 
 
