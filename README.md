@@ -3,3 +3,6 @@ This repository contains various external applications that interact with the JS
 **public_systems.txt** - "Official" list of publicly accessible external applications.
 
 **Bulletin Board** - A simple app the will display user input via SMS.
+
+**Weather** - A simple app the will return curent weather conditions from Open Weather Map. API key required.
+
