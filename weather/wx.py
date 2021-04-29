@@ -18,7 +18,7 @@
 
 '''
 This is an example application that utilizes the JSON API.
-It is a simple bulletin board application.
+It is a simple weathwe application.
 '''
 
 from flask import Flask, request, Markup, jsonify, make_response

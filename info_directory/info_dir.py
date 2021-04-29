@@ -18,12 +18,13 @@
 
 '''
 This is an example application that utilizes the JSON API.
-It is a simple bulletin board application.
+It is an information directory application.
 '''
 
 from flask import Flask, request, Markup, jsonify, make_response
 import json, requests, time
 from config import *
+import os, ast
 
 app = Flask(__name__)
 
@@ -50,7 +51,14 @@ def respond_request(dest_id, message, token, url):
 
 @app.route('/', methods=['GET'])
 def view():
-    post_string = ''
+    q_data = ast.literal_eval(os.popen('cat ./queries.txt').read())
+    print(q_data)
+    q_list = ''
+    for i in q_data:
+        q_list = q_list + ''' <tr>
+    <td style="text-align: center;">''' + i + '''</td>
+    </tr>''' + '\n'
+        print(i)
     header = '''
     <!DOCTYPE html>
     <html lang="en">
@@ -60,61 +68,51 @@ def view():
     </head>
     <p><img style="display: block; margin-left: auto; margin-right: auto;" src="''' + app_logo + '''" alt="Logo" width="300" height="144" /></p>
     <h1 style="text-align: center;">''' + app_name + '''</h1>
-    <table style="width: 800px; border-color: black; margin-left: auto; margin-right: auto;" border="3">
+    <table style="width: 200px; margin-left: auto; margin-right: auto;" border="1">
     <tbody>
     <tr>
     <td style="text-align: center;">
-    <h3>From</h3>
-    </td>
-    <td style="text-align: center;">
-    <h3>Message</h3>
-    </td>
-    <td style="text-align: center;">
-    <h3>Time</h3>
-    </td>
-    <td style="text-align: center;">
-    <h3>Network/Server</h3>
+    <h2>Available Queries</h2>
     </td>
     </tr>
+    
+
     '''
     footer = '''
     </tbody>
     </table>
     <p>&nbsp;</p>
-    <div style="text-align: center;">Bulletin Board created by KF7EEL - <a href="https://kf7eel.github.io/hblink3/">https://github.com/kf7eel/hblink3</a></div>
+    <div style="text-align: center;">Information Directory created by KF7EEL - <a href="https://kf7eel.github.io/hblink3/">https://github.com/kf7eel/hblink3</a></div>
     </html>
     '''
-    for i in display_list:
-            post_string = post_string + i + '\n'
-    return header + post_string + footer
+
+    return header + q_list + footer
     
 
-@app.route('/post', methods=['POST'])
+@app.route('/query', methods=['POST'])
 def api(api_mode=None):
+    q_data = ast.literal_eval(os.popen('cat ./queries.txt').read())
     api_data = request.json
-    radio_id_get = response = requests.get("https://radioid.net/api/dmr/user/?id=" + str(api_data['data']['source_id']))
-##    print(api_data['data']['message'])
-##    print(radio_id_get.json())
-    radio_id_result = radio_id_get.json()
-##    print(radio_id_result['results'][0]['callsign'])
-    from_callsign = radio_id_result['results'][0]['callsign']
-    name = radio_id_result['results'][0]['fname']
+    #radio_id_get = response = requests.get("https://radioid.net/api/dmr/user/?id=" + str(api_data['data']['source_id']))
+    print(api_data['data']['message'])
+    #print(radio_id_get.json())
+    #radio_id_result = radio_id_get.json()
+    #print(radio_id_result['results'][0]['callsign'])
+    #from_callsign = radio_id_result['results'][0]['callsign']
+    #name = radio_id_result['results'][0]['fname']
     if api_data['mode'] == 'app':
-        
-        display_list.append('''
-        <tr>
-        <td style="text-align: center;"><strong>''' + str(from_callsign) + '</strong><br />' + '<em>' + str(name) + '</em><br />' + str(api_data['data']['source_id']) + '''</td>
-        <td style="text-align: center;"><strong>''' + api_data['data']['message'] + '''</strong></td>
-        <td style="text-align: center;">''' + time.strftime('%H:%M - %m/%d/%y') + '''</td>
-        <td style="text-align: center;">''' + api_data['server_name']+ '''</td>
-        </tr>
-                            ''')
-        
-        respond_request(api_data['data']['source_id'], 'Posted: ' + api_data['data']['message'], api_data['auth_token'],api_data['response_url'])
-        return jsonify(
-                            mode=api_data['mode'],
-                            status='Response Sent',
-                        )
+        try:
+            respond_request(api_data['data']['source_id'], q_data[api_data['data']['message']], api_data['auth_token'],api_data['response_url'])
+            return jsonify(
+                                mode=api_data['mode'],
+                                status='Response Sent',
+                            )
+        except:
+            respond_request(api_data['data']['source_id'], 'Error with query', api_data['auth_token'],api_data['response_url'])
+            return jsonify(
+                                mode=api_data['mode'],
+                                status='Response Sent',
+                            )
 
 
 

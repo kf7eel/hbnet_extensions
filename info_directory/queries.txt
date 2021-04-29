@@ -1,0 +1,4 @@
+{
+'help':'This is a help message',
+'about':'This is an info directory'
+}
