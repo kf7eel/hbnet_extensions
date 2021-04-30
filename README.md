@@ -6,3 +6,5 @@ This repository contains various external applications that interact with the JS
 
 **Weather** - A simple app the will return curent weather conditions from Open Weather Map. API key required.
 
+**Information Directory** - Replies with pre-set SMS to user queries.
+
