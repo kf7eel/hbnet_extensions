@@ -1,4 +1,4 @@
-This repository contains various external applications that interact with the JSON API for HBLink3 APRS/SMS.
+This repository contains various external applications that interact with the JSON API for HBNet APRS/SMS.
 
 **public_systems.txt** - "Official" list of publicly accessible external applications.
 
